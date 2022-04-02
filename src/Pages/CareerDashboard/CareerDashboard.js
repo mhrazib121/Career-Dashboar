@@ -41,7 +41,7 @@ const CareerDashboard = () => {
         setWorkplaces([]);
     }
     const onSubmit = data =>{
-        axios.post('http://localhost:5000/jobposts', data)
+        axios.post('https://afternoon-journey-90579.herokuapp.com/jobposts', data)
             .then(res => {
                 if (res.data.insertedId) {
                     alert('Job post successfully');
@@ -61,7 +61,11 @@ const CareerDashboard = () => {
                         </div>
                         {/* Employment type */}
                         <div>
-                            <input className='input-field employment-type' type="text" value={type} placeholder='Employment Type' onFocus={() => onEmplomentTypeSelect()} {...register("employmentType", { required: true })} />
+                            <input className='input-field employment-type' type="text" value={type} placeholder='Employment Type' onFocus={() => onEmplomentTypeSelect()} onBlur={()=>{
+                                setTimeout(()=>{
+                                    setEmploymentTypes([]); 
+                                }, 100)
+                            }} {...register("employmentType", { required: true })} />
                             <div className='dropdown-body'>
                                 {
                                     employmentTypes.map((employmentType, i) =>
@@ -78,7 +82,11 @@ const CareerDashboard = () => {
                         </div>
                         {/* Job Section */}
                         <div>
-                            <input type="text" value={jobText} placeholder='Job Section (Option Choose)' className='input-field2 job-section' onFocus={() => onJobSectionHandler()} {...register("jobSection", { required: true })}/>
+                            <input type="text" value={jobText} placeholder='Job Section (Option Choose)' className='input-field2 job-section' onFocus={() => onJobSectionHandler()} onBlur={()=>{
+                                setTimeout(()=>{
+                                    setJobSections([]);
+                                }, 100)
+                            }} {...register("jobSection", { required: true })}/>
                             <div className='dropdown-body'>
                                 {
                                     jobSections.map((jobSection, i) =>
@@ -89,7 +97,11 @@ const CareerDashboard = () => {
                         </div>
                         {/* Workplace */}
                         <div>
-                            <input type="text" value={workplaceText} placeholder='Workplace Type (Option Choose)' className='input-field2' onFocus={() => onWorkplaceHandler()} {...register("workplaceType", { required: true })}/>
+                            <input type="text" value={workplaceText} placeholder='Workplace Type (Option Choose)' className='input-field2' onFocus={() => onWorkplaceHandler()} onBlur={()=>{
+                                setTimeout(()=>{
+                                    setWorkplaces([]);
+                                }, 100)
+                            }} {...register("workplaceType", { required: true })}/>
                             <div className='dropdown-body'>
                                 {
                                     workplaces.map((workplace, i) =>
