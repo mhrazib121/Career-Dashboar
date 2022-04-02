@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import './CareerDashboard.css'
@@ -9,7 +10,7 @@ const CareerDashboard = () => {
     const [jobText, setJobText] = useState("");
     const [workplaces, setWorkplaces] = useState([]);
     const [workplaceText, setWorkplaceText] = useState("");
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit, reset } = useForm();
 
     // For selecting Employment Type 
     const allEmplomentType = ["Full-time", "Part-time", "Contract", "Temporary", "Volunteer", "Internship"];
@@ -39,10 +40,18 @@ const CareerDashboard = () => {
         setWorkplaceText(e);
         setWorkplaces([]);
     }
-    const onSubmit = data => console.log(data);
+    const onSubmit = data =>{
+        axios.post('http://localhost:5000/jobposts', data)
+            .then(res => {
+                if (res.data.insertedId) {
+                    alert('Job post successfully');
+                    reset();
+                }
+            })
+    }
     return (
         <div className='container'>
-            <h1 className='text-center'>Career Dashboard</h1>
+            <h1 className='text-center mt-5 mb-3'>Career Dashboard</h1>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className='w-full'>
                     <div className='d-lg-flex justify-content-between'>
@@ -104,12 +113,11 @@ const CareerDashboard = () => {
                     <h3>Add a job description </h3>
                     <h6>Description *</h6>
                     <textarea name="" id="" cols="145" rows="7" {...register("description", { required: true })}></textarea>
-                    <h3>Add Skill</h3>
+                    <h3 className='mt-2'>Add Skill</h3>
                     <p>Add skill keyword to make your job more visible to the right candidates (select up to 10)</p>
-                    <h5 className='add-skill-btn'>Add skill +</h5>
+                    <h5 className='add-skill-btn '>Add skill +</h5>
                 </div>
-                
-                <input type="submit"><button className='btn btn-color mb-5 px-3 fs-4 rounded text-dark fw-bold d-flex ms-auto'> Submit</button> </input>
+                <input className='btn btn-color mb-5 px-3 fs-4 rounded text-dark fw-bold d-flex ms-auto' type="submit"/>
             </form>
         </div>
     );
