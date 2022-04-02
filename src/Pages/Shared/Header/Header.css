@@ -1,0 +1,14 @@
+.logo{
+    width: 30px;
+}
+.nav-link{
+    list-style: none;
+    margin-right: 5px;
+    margin-left: 5px;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 26px;
+    line-height: 30px;
+    color: #000000;
+}
